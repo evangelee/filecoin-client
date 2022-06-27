@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"encoding/hex"
+	"fmt"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/myxtype/filecoin-client"
@@ -14,6 +16,17 @@ import (
 func main() {
 	// 设置网络类型
 	address.CurrentNetwork = address.Mainnet
+	client := filecoin.New("https://1lB5G4SmGdSTikOo7l6vYlsktdd:b58884915362a99b4fc18c2bf8af8358@filecoin.infura.io")
+
+	addr1, _ := address.NewFromString("f1ntod647g54mv7pqbkniqnyov6k7thr2uxdec42i")
+	b, err := client.WalletBalance(context.Background(), addr1)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(filecoin.ToFil(b))
+
+	return
 
 	// 生产新的地址
 	// 新地址有转入fil才激活，不然没法用
@@ -44,7 +57,7 @@ func main() {
 		Params:     nil,
 	}
 
-	client := filecoin.New("https://1lB5G4SmGdSTikOo7l6vYlsktdd:b58884915362a99b4fc18c2bf8af8358@filecoin.infura.io")
+	// client := filecoin.New("https://1lB5G4SmGdSTikOo7l6vYlsktdd:b58884915362a99b4fc18c2bf8af8358@filecoin.infura.io")
 
 	// 最大手续费0.0001 FIL
 	//maxFee := filecoin.FromFil(decimal.NewFromFloat(0.0001))
