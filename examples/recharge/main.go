@@ -15,7 +15,7 @@ func main() {
 	job := &RechargeFilJob{}
 
 	// 处理区块652243
-	if err := job.mapHeight(client, 1933971); err != nil {
+	if err := job.mapHeight(client, 1956904); err != nil {
 		panic(err)
 	}
 
