@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
+	"fmt"
 
 	"github.com/ipfs/go-cid"
 	"github.com/myxtype/filecoin-client"
@@ -10,14 +12,33 @@ import (
 
 // 简单的充值逻辑
 func main() {
-	client := filecoin.New("https://1lB5G4SmGdSTikOo7l6vYlsktdd:b58884915362a99b4fc18c2bf8af8358@filecoin.infura.io")
+	// client := filecoin.New("https://1lB5G4SmGdSTikOo7l6vYlsktdd:b58884915362a99b4fc18c2bf8af8358@filecoin.infura.io")
+	client := filecoin.NewClient("http://113.142.2.194:41234/rpc/v0", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.L2rJyd_Q77XW8MD02arfPbaR1GuBn8cFAfBAIhMHmmM")
 
-	job := &RechargeFilJob{}
-
-	// 处理区块652243
-	if err := job.mapHeight(client, 1956904); err != nil {
+	addr, err := client.WalletNew(context.Background(), types.KTSecp256k1)
+	if err != nil {
+		// t.Error(err)
 		panic(err)
 	}
+	// t.Log(addr)
+	fmt.Println(addr)
+
+	ki, err := client.WalletExport(context.Background(), addr)
+	if err != nil {
+		// t.Error(err)
+		panic(err)
+	}
+
+	// secp256k1 fd1d429f2e0744f5dbcc361796e1a6f5cf4b59ecca92c15c27f837401c12a3da
+	// t.Log(ki.Type, hex.EncodeToString(ki.PrivateKey))
+	fmt.Println(ki.Type, hex.EncodeToString(ki.PrivateKey))
+
+	// job := &RechargeFilJob{}
+
+	// // 处理区块652243
+	// if err := job.mapHeight(client, 1956904); err != nil {
+	// 	panic(err)
+	// }
 
 	// todo
 }
