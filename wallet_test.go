@@ -3,9 +3,10 @@ package filecoin
 import (
 	"context"
 	"encoding/hex"
+	"testing"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/myxtype/filecoin-client/types"
-	"testing"
 )
 
 // 查询钱包余额
